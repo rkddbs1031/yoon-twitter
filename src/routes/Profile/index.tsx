@@ -1,4 +1,14 @@
+import { authService } from '../../firebase'
+
 const Profile = () => {
-  return <div>Profile</div>
+  const handleLogOut = () => authService.signOut()
+  return (
+    <section>
+      <h2>Profile</h2>
+      <button type='button' onClick={handleLogOut}>
+        LogOut
+      </button>
+    </section>
+  )
 }
 export default Profile
