@@ -6,6 +6,7 @@ import Home from './Home'
 import Auth from './Auth'
 import Profile from './Profile'
 import Footer from 'components/Footer'
+import Header from 'components/Header'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -18,11 +19,12 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    !isLoggedIn ? navigate('auth') : navigate('/')
+    if (!isLoggedIn) navigate('auth')
   }, [isLoggedIn, navigate])
 
   return (
     <>
+      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='auth' element={<Auth />} />
