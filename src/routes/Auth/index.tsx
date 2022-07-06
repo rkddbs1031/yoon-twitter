@@ -19,47 +19,49 @@ const AuthPage = () => {
   const [newAccount, setNewAccount] = useState<boolean>(true)
   const [authError, setAuthError] = useState<string>('')
 
-  const handleSocialClick = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSocialLogin = async (e: MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget
     let provider
-
-    if (name === 'google') {
-      provider = new GoogleAuthProvider()
-    } else {
-      provider = new GithubAuthProvider()
-    }
+    name === 'google' ? (provider = new GoogleAuthProvider()) : (provider = new GithubAuthProvider())
     await signInWithPopup(AUTH, provider)
   }
 
   const toggleAccount = () => setNewAccount((prev) => !prev)
 
-  const handleAccount = async () => {
-    let data
-
-    if (newAccount) {
-      try {
-        data = await createUserWithEmailAndPassword(AUTH, email, password)
-      } catch (err) {
-        if ((err as { message: string }).message.includes('auth/email-already-in-use')) {
-          setAuthError('해당 계정으로 이미 가입이 되어있습니다.')
-        } else if ((err as { message: string }).message.includes('auth/weak-password')) {
-          setAuthError('비밀번호는 최소 6자리 입니다.')
-        }
-      }
-    } else {
-      try {
-        data = await signInWithEmailAndPassword(AUTH, email, password)
-      } catch (err) {
-        const errMsg = 'auth/wrong-password'
-        if ((err as { message: string }).message.includes(errMsg)) setAuthError('비밀번호가 맞지 않습니다.')
+  const handleAddNewAccount = async () => {
+    try {
+      const data = await createUserWithEmailAndPassword(AUTH, email, password)
+      data && navigate('/')
+    } catch (err) {
+      if ((err as { message: string }).message.includes('auth/email-already-in-use')) {
+        setAuthError('해당 계정으로 이미 가입이 되어있습니다.')
+      } else if ((err as { message: string }).message.includes('auth/weak-password')) {
+        setAuthError('비밀번호는 최소 6자리 입니다.')
       }
     }
-    data && navigate('/')
+  }
+
+  const handleLoginAccount = async () => {
+    try {
+      const data = await signInWithEmailAndPassword(AUTH, email, password)
+      data && navigate('/')
+    } catch (err) {
+      const errMsg = 'auth/wrong-password'
+      if ((err as { message: string }).message.includes(errMsg)) setAuthError('비밀번호가 맞지 않습니다.')
+    }
+  }
+
+  const handleNewAccount = async () => {
+    if (newAccount) {
+      handleAddNewAccount()
+    } else {
+      handleLoginAccount()
+    }
   }
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    handleAccount()
+    handleNewAccount()
   }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,10 +83,10 @@ const AuthPage = () => {
         {newAccount ? 'Sign In' : 'Create Account'}
       </button>
       <div>
-        <button type='button' name='google' onClick={handleSocialClick}>
+        <button type='button' name='google' onClick={handleSocialLogin}>
           Continue with Google
         </button>
-        <button type='button' name='github' onClick={handleSocialClick}>
+        <button type='button' name='github' onClick={handleSocialLogin}>
           Continue with GitHub
         </button>
       </div>
