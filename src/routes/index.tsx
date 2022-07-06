@@ -1,6 +1,6 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'hooks'
-import { authService } from '../firebase'
+import { authService } from 'utils/firebase'
 
 import Home from './Home'
 import Auth from './Auth'

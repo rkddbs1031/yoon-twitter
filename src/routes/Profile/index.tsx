@@ -1,4 +1,4 @@
-import { authService } from '../../firebase'
+import { authService } from 'utils/firebase'
 
 const Profile = () => {
   const handleLogOut = () => authService.signOut()
