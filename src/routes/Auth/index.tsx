@@ -1,4 +1,5 @@
 import { FormEvent, ChangeEvent, MouseEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'hooks'
 import {
   getAuth,
@@ -9,7 +10,10 @@ import {
   signInWithPopup,
 } from 'firebase/auth'
 
-const Auth = () => {
+const AUTH = getAuth()
+
+const AuthPage = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [newAccount, setNewAccount] = useState<boolean>(true)
@@ -17,22 +21,24 @@ const Auth = () => {
 
   const handleSocialClick = async (e: MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget
-    const auth = getAuth()
     let provider
+
     if (name === 'google') {
       provider = new GoogleAuthProvider()
     } else {
       provider = new GithubAuthProvider()
     }
-    await signInWithPopup(auth, provider)
+    await signInWithPopup(AUTH, provider)
   }
+
   const toggleAccount = () => setNewAccount((prev) => !prev)
 
   const handleAccount = async () => {
-    const auth = getAuth()
+    let data
+
     if (newAccount) {
       try {
-        await createUserWithEmailAndPassword(auth, email, password)
+        data = await createUserWithEmailAndPassword(AUTH, email, password)
       } catch (err) {
         if ((err as { message: string }).message.includes('auth/email-already-in-use')) {
           setAuthError('해당 계정으로 이미 가입이 되어있습니다.')
@@ -42,12 +48,13 @@ const Auth = () => {
       }
     } else {
       try {
-        await signInWithEmailAndPassword(auth, email, password)
+        data = await signInWithEmailAndPassword(AUTH, email, password)
       } catch (err) {
         const errMsg = 'auth/wrong-password'
         if ((err as { message: string }).message.includes(errMsg)) setAuthError('비밀번호가 맞지 않습니다.')
       }
     }
+    data && navigate('/')
   }
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -84,4 +91,4 @@ const Auth = () => {
     </section>
   )
 }
-export default Auth
+export default AuthPage
