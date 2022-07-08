@@ -1,23 +1,23 @@
 import { FormEvent, ChangeEvent } from 'react'
+import { useRecoilValue } from 'recoil'
+
 import { useState, useEffect } from 'hooks'
+import { userObjstate } from 'states'
+import { IYweetsData } from 'types/yweets'
 import { dbService } from 'utils/firebase'
 import { addDoc, collection, orderBy, query, onSnapshot } from 'firebase/firestore'
-
-interface IYweetsData {
-  id: string
-  createdAt?: number
-  yweet?: string
-}
 
 const Home = () => {
   const [yweet, setYweet] = useState<string>('')
   const [yweets, setYweets] = useState<IYweetsData[]>([])
+  const userObj = useRecoilValue(userObjstate)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await addDoc(collection(dbService, 'yweets'), {
       yweet,
       createdAt: Date.now(),
+      creatorId: userObj.uid,
     })
     setYweet('')
   }
@@ -28,6 +28,7 @@ const Home = () => {
   }
 
   const getYweets = async () => {
+    // onSnapshot은 realtime~~
     await onSnapshot(query(collection(dbService, 'yweets'), orderBy('createdAt', 'desc')), (snapshot) => {
       const yweetsObj = snapshot.docs.map((doc) => ({
         id: doc.id,
