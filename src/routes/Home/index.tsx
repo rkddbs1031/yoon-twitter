@@ -7,6 +7,8 @@ import { IYweetsData } from 'types/yweets'
 import { dbService } from 'utils/firebase'
 import { addDoc, collection, orderBy, query, onSnapshot } from 'firebase/firestore'
 
+import Yweet from 'components/Yweet'
+
 const Home = () => {
   const [yweet, setYweet] = useState<string>('')
   const [yweets, setYweets] = useState<IYweetsData[]>([])
@@ -18,8 +20,9 @@ const Home = () => {
       yweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
+    }).then(() => {
+      setYweet('')
     })
-    setYweet('')
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +31,6 @@ const Home = () => {
   }
 
   const getYweets = async () => {
-    // onSnapshot은 realtime~~
     await onSnapshot(query(collection(dbService, 'yweets'), orderBy('createdAt', 'desc')), (snapshot) => {
       const yweetsObj = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -51,7 +53,7 @@ const Home = () => {
       </form>
       <ul>
         {yweets.map((item) => (
-          <li key={item.id}>{item.yweet}</li>
+          <Yweet key={item.id} yweetObj={item} isOwner={item.creatorId === userObj.uid} />
         ))}
       </ul>
     </section>
