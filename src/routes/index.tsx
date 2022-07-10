@@ -48,11 +48,13 @@ const App = () => {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='auth' element={<Auth />} />
-        <Route path='profile' element={<Profile />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='auth' element={<Auth />} />
+          <Route path='profile' element={<Profile />} />
+        </Routes>
+      </main>
       <Footer />
     </>
   )
