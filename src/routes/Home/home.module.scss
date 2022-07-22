@@ -23,7 +23,7 @@
       }
     }
 
-    button {
+    .submitBtn {
       @include flexbox.flexbox;
       position: absolute;
       top: 50%;
@@ -33,6 +33,17 @@
       background: colors.$MAIN_COLOR;
       border-radius: 0 50px 50px 0;
       transform: translateY(-50%);
+    }
+
+    .imgWrap {
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      border-radius: 50%;
+
+      img {
+        width: 100%;
+      }
     }
   }
 }
