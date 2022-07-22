@@ -12,10 +12,11 @@ import Profile from './Profile'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
 import Loading from 'components/Loading'
+import styles from './routes.module.scss'
 
 const App = () => {
   const [ready, setReady] = useState<boolean>(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
   const setUserObj = useSetRecoilState<IUserInfo>(userObjstate)
   const navigate = useNavigate()
 
@@ -46,17 +47,19 @@ const App = () => {
 
   // if (init && )
   return (
-    <>
-      <Header />
-      <main>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='auth' element={<Auth />} />
-          <Route path='profile' element={<Profile />} />
-        </Routes>
-      </main>
-      <Footer />
-    </>
+    <div className={styles.appWrap}>
+      <div className={styles.app}>
+        <Header />
+        <main>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='auth' element={<Auth />} />
+            <Route path='profile' element={<Profile />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </div>
   )
 }
 export default App

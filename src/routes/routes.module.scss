@@ -1,0 +1,18 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+
+.appWrap {
+  @include flexbox.flexbox(center, center);
+  height: 100vh;
+  background: colors.$BG_COLOR;
+
+  .app {
+    position: relative;
+    width: 320px;
+    height: 640px;
+    padding: 40px 25px;
+    background-color: colors.$APP_BG;
+    border-radius: 50px;
+    box-shadow: 0 1px 4px colors.$APP_BOX_SHADOW;
+  }
+}
