@@ -1,8 +1,12 @@
 import { ChangeEvent, FormEvent } from 'react'
+
 import { deleteDoc, updateDoc, doc } from 'firebase/firestore'
 import { IYweetsData } from 'types/yweets'
 import { dbService } from 'utils/firebase'
 import { useState } from 'hooks'
+
+import { EditIcon, DeleteIcon, ModifyIcon, CancleIcon } from 'assets/svgs'
+import styles from './yweet.module.scss'
 
 interface IProps {
   yweetObj: IYweetsData
@@ -38,25 +42,37 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
     setNewYweet(value)
   }
 
-  return edditing ? (
-    <form onSubmit={onSubmit}>
-      <input type='text' value={newYweet} placeholder='Edut your yweet' onChange={handleChange} />
-      <button type='button' onClick={handleCancel}>
-        Cancel
-      </button>
-      <button type='submit'>Update</button>
-    </form>
-  ) : (
-    <li>
-      <span>{yweetObj.yweet}</span>
-      {isOwner && (
+  return (
+    <li className={styles.yweet}>
+      {edditing ? (
+        <form onSubmit={onSubmit}>
+          <div className={styles.formWrap}>
+            <div className={styles.inputBox}>
+              <input type='text' value={newYweet} placeholder='Edut your yweet' onChange={handleChange} />
+            </div>
+            <div className={styles.btnWrap}>
+              <button type='button' onClick={handleCancel}>
+                <CancleIcon />
+              </button>
+              <button type='submit'>
+                <ModifyIcon />
+              </button>
+            </div>
+          </div>
+        </form>
+      ) : (
         <>
-          <button type='button' onClick={handleDelete}>
-            Delete
-          </button>
-          <button type='button' onClick={handleEdit}>
-            Edit
-          </button>
+          <span>{yweetObj.yweet}</span>
+          {isOwner && (
+            <div className={styles.btnWrap}>
+              <button type='button' onClick={handleEdit}>
+                <EditIcon />
+              </button>
+              <button type='button' onClick={handleDelete}>
+                <DeleteIcon />
+              </button>
+            </div>
+          )}
         </>
       )}
     </li>

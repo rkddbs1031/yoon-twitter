@@ -1,0 +1,64 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+
+.yweet {
+  @include flexbox.flexbox(between, center);
+  padding: 14px;
+  background: colors.$YWEET_BOX;
+  border: 1px solid colors.$YWEET_BORDER;
+  border-radius: 7px;
+
+  span {
+    font-size: 14px;
+    color: colors.$GRAY6;
+  }
+
+  + .yweet {
+    margin-top: 14px;
+  }
+
+  .btnWrap {
+    button + button {
+      margin-left: 7px;
+    }
+  }
+
+  form {
+    width: 100%;
+
+    .formWrap {
+      @include flexbox.flexbox(between, center);
+
+      .inputBox {
+        position: relative;
+
+        input {
+          font-size: 14px;
+
+          &::placeholder {
+            font-size: 13px;
+          }
+        }
+
+        &::before {
+          position: absolute;
+          bottom: -5px;
+          display: block;
+          width: 0%;
+          height: 1px;
+          content: '';
+          background: colors.$GRAYA;
+          opacity: 0;
+          animation: line 0.4s 0.2s forwards;
+        }
+      }
+    }
+  }
+}
+
+@keyframes line {
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
