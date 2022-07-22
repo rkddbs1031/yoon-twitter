@@ -8,6 +8,8 @@ import { dbService } from 'utils/firebase'
 import { addDoc, collection, orderBy, query, onSnapshot } from 'firebase/firestore'
 
 import Yweet from 'components/Yweet'
+import { SubmitIcon } from 'assets/svgs'
+import styles from './home.module.scss'
 
 const Home = () => {
   const [yweet, setYweet] = useState<string>('')
@@ -25,10 +27,7 @@ const Home = () => {
     })
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget
-    setYweet(value)
-  }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setYweet(e.currentTarget.value)
 
   const getYweets = async () => {
     await onSnapshot(query(collection(dbService, 'yweets'), orderBy('createdAt', 'desc')), (snapshot) => {
@@ -47,11 +46,15 @@ const Home = () => {
   return (
     <section>
       <h2>Home</h2>
-      <form onSubmit={handleSubmit}>
-        <input type='text' value={yweet} placeholder="what's on your mind?" maxLength={120} onChange={handleChange} />
-        <button type='submit'>Yweet</button>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputBox}>
+          <input type='text' value={yweet} placeholder="what's on your mind?" maxLength={120} onChange={handleChange} />
+          <button type='submit'>
+            <SubmitIcon />
+          </button>
+        </div>
       </form>
-      <ul>
+      <ul className={styles.yweetList}>
         {yweets.map((item) => (
           <Yweet key={item.id} yweetObj={item} isOwner={item.creatorId === userObj.uid} />
         ))}

@@ -1,0 +1,43 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+
+.form {
+  margin-bottom: 20px;
+
+  .inputBox {
+    position: relative;
+    background: colors.$WHITE;
+    border: 1px solid colors.$MAIN_COLOR;
+    border-radius: 50px;
+
+    input {
+      width: calc(100% - 35px);
+      padding: 8px 20px 10px;
+      font-size: 14px;
+      color: colors.$GRAY6;
+
+      &::placeholder {
+        font-size: 14px;
+        color: colors.$GRAYA;
+        letter-spacing: -0.2px;
+      }
+    }
+
+    button {
+      @include flexbox.flexbox;
+      position: absolute;
+      top: 50%;
+      right: -1px;
+      width: 35px;
+      height: 100%;
+      background: colors.$MAIN_COLOR;
+      border-radius: 0 50px 50px 0;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.yweetList {
+  height: 430px;
+  overflow: scroll;
+}
