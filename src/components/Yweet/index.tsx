@@ -2,11 +2,12 @@ import { ChangeEvent, FormEvent } from 'react'
 
 import { deleteDoc, updateDoc, doc } from 'firebase/firestore'
 import { IYweetsData } from 'types/yweets'
-import { dbService } from 'utils/firebase'
+import { dbService, storageService } from 'utils/firebase'
 import { useState } from 'hooks'
 
 import { EditIcon, DeleteIcon, ModifyIcon, CancleIcon } from 'assets/svgs'
 import styles from './yweet.module.scss'
+import { ref, deleteObject } from 'firebase/storage'
 
 interface IProps {
   yweetObj: IYweetsData
@@ -21,7 +22,10 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
     // 임시로 confirm사용하기 추후 모달생성으로 수정
     const ok = window.confirm('정말 삭제하시겠습니까?')
     const NweetTextRef = doc(dbService, 'yweets', yweetObj.id)
-    ok && (await deleteDoc(NweetTextRef))
+    if (ok) {
+      await deleteDoc(NweetTextRef)
+      yweetObj.imageurl && (await deleteObject(ref(storageService, yweetObj.imageurl)))
+    }
   }
 
   const handleEdit = () => setEditing((prev) => !prev)
@@ -62,7 +66,24 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
         </form>
       ) : (
         <>
-          <span>{yweetObj.yweet}</span>
+          <dl>
+            {yweetObj.imageurl && (
+              <div className={styles.userImg}>
+                <dt>이미지</dt>
+                <dd>
+                  <div className={styles.imgContainer}>
+                    <img src={yweetObj.imageurl} alt={yweetObj.yweet} />
+                  </div>
+                </dd>
+              </div>
+            )}
+            <div>
+              <dt>yweet</dt>
+              <dd className={styles.yweetDesc}>{yweetObj.yweet}</dd>
+              <dt>아이디</dt>
+              <dd className={styles.userId}>유저 아이디</dd>
+            </div>
+          </dl>
           {isOwner && (
             <div className={styles.btnWrap}>
               <button type='button' onClick={handleEdit}>

@@ -8,4 +8,5 @@ export interface IYweetsData {
   createdAt?: number
   yweet?: string
   creatorId?: string
+  imageurl?: string
 }
