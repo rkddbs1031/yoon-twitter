@@ -18,8 +18,11 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
   const [edditing, setEditing] = useState<boolean>(false)
   const [newYweet, setNewYweet] = useState(yweetObj.yweet)
 
+  const handleEdit = () => setEditing((prev) => !prev)
+
+  const handleCancel = () => setEditing((prev) => !prev)
+
   const handleDelete = async () => {
-    // 임시로 confirm사용하기 추후 모달생성으로 수정
     const ok = window.confirm('정말 삭제하시겠습니까?')
     const NweetTextRef = doc(dbService, 'yweets', yweetObj.id)
     if (ok) {
@@ -27,10 +30,6 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
       yweetObj.imageurl && (await deleteObject(ref(storageService, yweetObj.imageurl)))
     }
   }
-
-  const handleEdit = () => setEditing((prev) => !prev)
-
-  const handleCancel = () => setEditing((prev) => !prev)
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
