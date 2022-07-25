@@ -37,6 +37,7 @@ const YweetForm = () => {
       createdAt: Date.now(),
       creatorId: userObj.uid,
       imageurl: getFileURL,
+      userId: userObj.displayName,
     }).then(() => {
       setYweet('')
       handleCancleUpload()
@@ -61,20 +62,26 @@ const YweetForm = () => {
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.inputBox}>
         <input type='text' value={yweet} placeholder="what's on your mind?" maxLength={120} onChange={handleChange} />
-        <input type='file' accept='image/*' onChange={onFileChange} ref={fileRef} />
+        <button type='submit' className={styles.submitBtn}>
+          <SubmitIcon />
+        </button>
+      </div>
+      <div className={styles.addImage}>
+        <label htmlFor='attachFile'>
+          <span>Add photos</span>
+          <span>+</span>
+        </label>
+        <input id='attachFile' type='file' accept='image/*' onChange={onFileChange} ref={fileRef} />
         {imageurl && (
-          <>
+          <div className={styles.photo}>
             <div className={styles.imgWrap}>
               <img src={imageurl} alt='test' />
             </div>
             <button type='button' onClick={handleCancleUpload}>
               삭제
             </button>
-          </>
+          </div>
         )}
-        <button type='submit' className={styles.submitBtn}>
-          <SubmitIcon />
-        </button>
       </div>
     </form>
   )

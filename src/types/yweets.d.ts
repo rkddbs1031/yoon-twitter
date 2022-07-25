@@ -9,4 +9,5 @@ export interface IYweetsData {
   yweet?: string
   creatorId?: string
   imageurl?: string
+  userId?: string
 }

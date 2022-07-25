@@ -80,7 +80,7 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
               <dt>yweet</dt>
               <dd className={styles.yweetDesc}>{yweetObj.yweet}</dd>
               <dt>아이디</dt>
-              <dd className={styles.userId}>유저 아이디</dd>
+              <dd className={styles.userId}>{yweetObj.userId}</dd>
             </div>
           </dl>
           {isOwner && (
