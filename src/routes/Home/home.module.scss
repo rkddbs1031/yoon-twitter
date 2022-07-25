@@ -2,7 +2,7 @@
 @use '/src/styles/mixins/flexbox';
 
 .form {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
   .inputBox {
     position: relative;
@@ -28,16 +28,51 @@
       position: absolute;
       top: 50%;
       right: -1px;
-      width: 35px;
+      width: 40px;
+      height: 40px;
       height: 100%;
       background: colors.$MAIN_COLOR;
-      border-radius: 0 50px 50px 0;
+      border-radius: 50%;
       transform: translateY(-50%);
+    }
+  }
+
+  .addImage {
+    label {
+      @include flexbox.flexbox(center, center);
+      margin-top: 10px;
+      cursor: pointer;
+
+      span {
+        font-size: 14px;
+        color: colors.$MAIN_COLOR;
+
+        + span {
+          display: inline-block;
+          margin-left: 5px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    input {
+      display: none;
+    }
+
+    .photo {
+      button {
+        display: block;
+        margin: 5px auto 0;
+        color: colors.$MAIN_COLOR;
+      }
     }
 
     .imgWrap {
       width: 50px;
       height: 50px;
+      margin: 0 auto;
+      margin-top: 10px;
       overflow: hidden;
       border-radius: 50%;
 
@@ -49,6 +84,6 @@
 }
 
 .yweetList {
-  height: 430px;
+  height: 450px;
   overflow: scroll;
 }
