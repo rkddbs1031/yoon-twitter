@@ -2,6 +2,9 @@ import { MouseEvent } from 'react'
 import { getAuth, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 import AuthForm from './AuthForm'
+import { TweetIcon, GoogleIcon, GithubIcon } from 'assets/svgs'
+
+import styles from './auth.module.scss'
 
 const AuthPage = () => {
   const AUTH = getAuth()
@@ -14,16 +17,20 @@ const AuthPage = () => {
   }
 
   return (
-    <section>
-      <h2>Auth</h2>
-      <AuthForm />
+    <section className={styles.authContainer}>
       <div>
-        <button type='button' name='google' onClick={handleSocialLogin}>
-          Continue with Google
-        </button>
-        <button type='button' name='github' onClick={handleSocialLogin}>
-          Continue with GitHub
-        </button>
+        <h2>
+          <TweetIcon />
+        </h2>
+        <AuthForm />
+        <div className={styles.socialBtns}>
+          <button type='button' name='google' onClick={handleSocialLogin}>
+            Continue with Google <GoogleIcon />
+          </button>
+          <button type='button' name='github' onClick={handleSocialLogin}>
+            Continue with GitHub <GithubIcon />
+          </button>
+        </div>
       </div>
     </section>
   )

@@ -1,0 +1,77 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+
+.authContainer {
+  h2 {
+    margin: 50px 0 30px;
+    text-align: center;
+  }
+
+  .authForm {
+    input {
+      width: 100%;
+      padding: 7px 14px 10px;
+      font-size: 14px;
+      color: colors.$GRAY6;
+      border: 1px solid colors.$GRAYE;
+      border-radius: 50px;
+
+      &::placeholder {
+        font-size: 13px;
+        color: colors.$GRAYA;
+        letter-spacing: -0.2px;
+      }
+
+      + input {
+        margin-top: 14px;
+      }
+    }
+
+    .authError {
+      margin-top: 10px;
+      font-size: 10px;
+      color: colors.$RED;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .submitBtn {
+      padding: 7px 0 10px;
+      margin-top: 14px;
+      color: colors.$WHITE;
+      background: colors.$MAIN_COLOR;
+      border-radius: 50px;
+    }
+
+    .btn {
+      margin-top: 14px;
+      color: colors.$MAIN_COLOR;
+      text-align: center;
+      text-decoration: underline;
+    }
+  }
+
+  .socialBtns {
+    @include flexbox.flexbox(between, center);
+    margin-top: 50px;
+
+    button {
+      height: 35px;
+      font-size: 10px;
+      color: colors.$GRAY2;
+      border: 1px solid colors.$GRAYD;
+      border-radius: 50px;
+      @include flexbox.flexbox(center, center);
+
+      svg {
+        width: 10%;
+        margin-left: 5px;
+      }
+    }
+  }
+}
