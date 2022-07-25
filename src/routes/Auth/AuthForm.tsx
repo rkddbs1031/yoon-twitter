@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'hooks'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
+import styles from './auth.module.scss'
+
 const AuthForm = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
@@ -57,12 +59,14 @@ const AuthForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className={styles.authForm}>
       <input name='email' type='email' placeholder='Email' required onChange={onChange} />
       <input name='password' type='password' placeholder='Password' required onChange={onChange} />
-      <span>{authError}</span>
-      <button type='submit'>{newAccount ? 'Create Account' : 'Sign In'}</button>
-      <button type='button' onClick={toggleAccount}>
+      {authError && <p className={styles.authError}>{authError}</p>}
+      <button type='submit' className={styles.submitBtn}>
+        {newAccount ? 'Create Account' : 'Sign In'}
+      </button>
+      <button type='button' onClick={toggleAccount} className={styles.btn}>
         {newAccount ? 'Sign In' : 'Create Account'}
       </button>
     </form>
