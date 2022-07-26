@@ -1,0 +1,8 @@
+@use '/src/styles/constants/colors';
+
+.footer {
+  position: absolute;
+  bottom: 30px;
+  font-size: 14px;
+  color: colors.$GRAYA;
+}
