@@ -2,8 +2,9 @@
 @use '/src/styles/mixins/flexbox';
 
 .profileContainer {
+  padding-top: 80px;
+
   h2 {
-    margin-bottom: 100px;
     font-size: 14px;
 
     span {
@@ -11,11 +12,10 @@
     }
   }
 
-
   .profileForm {
-    padding: 30px 0;
+    padding: 20px 0 30px;
     margin-bottom: 30px;
-    border-bottom: 1px solid colors.$GRAYD;
+    border-bottom: 1px solid colors.$GRAYE;
 
     input {
       width: 100%;

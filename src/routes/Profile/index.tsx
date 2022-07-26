@@ -53,7 +53,7 @@ const Profile = () => {
   return (
     <section className={styles.profileContainer}>
       <h2>
-        <span>{userObj.displayName}님</span>의 Profile
+        <span>{userObj.displayName}</span>님의 프로필
       </h2>
       <form onSubmit={handleUpdateProfile} className={styles.profileForm}>
         <input
@@ -62,7 +62,7 @@ const Profile = () => {
           onChange={handleChangeDisplayName}
           value={newDisplayName}
         />
-        <button type='submit'>프로필 업데이트</button>
+        <button type='submit'>아이디 업데이트</button>
       </form>
       <button type='button' onClick={handleLogOut} className={styles.logoutBtn}>
         LogOut
