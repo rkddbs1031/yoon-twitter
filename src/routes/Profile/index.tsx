@@ -1,12 +1,14 @@
 import { ChangeEvent, FormEvent } from 'react'
-import { useEffect, useState } from 'hooks'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { userObjstate } from 'states'
 import { IYweetsData } from 'types/yweets'
+import { useEffect, useState, useCallback } from 'hooks'
 import { dbService, authService } from 'utils/firebase'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
+
+import styles from './profile.module.scss'
 
 const Profile = () => {
   const user = authService.currentUser
@@ -31,11 +33,10 @@ const Profile = () => {
 
   const handleChangeDisplayName = (e: ChangeEvent<HTMLInputElement>) => setNewDisplayName(e.currentTarget.value)
 
-  const getMyYweets = async () => {
+  const getMyYweets = useCallback(async () => {
     const yweets = await getDocs(
       query(collection(dbService, 'yweets'), where('creatorId', '==', userObj.uid), orderBy('createdAt', 'desc'))
     )
-
     yweets.forEach((doc) => {
       const yweetObj = {
         id: doc.id,
@@ -43,16 +44,18 @@ const Profile = () => {
       }
       myYweets !== null && setMyYweets((prev) => [yweetObj, ...prev])
     })
-  }
+  }, [myYweets, userObj.uid])
 
   useEffect(() => {
     getMyYweets()
-  }, [])
+  }, [getMyYweets])
 
   return (
-    <section>
-      <h2>Profile</h2>
-      <form onSubmit={handleUpdateProfile}>
+    <section className={styles.profileContainer}>
+      <h2>
+        <span>{userObj.displayName}님</span>의 Profile
+      </h2>
+      <form onSubmit={handleUpdateProfile} className={styles.profileForm}>
         <input
           type='text'
           placeholder='수정할 아이디를 작성해주세요.'
@@ -61,8 +64,7 @@ const Profile = () => {
         />
         <button type='submit'>프로필 업데이트</button>
       </form>
-      <p>{userObj.displayName}</p>
-      <button type='button' onClick={handleLogOut}>
+      <button type='button' onClick={handleLogOut} className={styles.logoutBtn}>
         LogOut
       </button>
     </section>
