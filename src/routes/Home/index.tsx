@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <section>
-      <h2>Home</h2>
+      <h2 className={styles.irSu}>Home</h2>
       <YweetForm />
       <ul className={styles.yweetList}>
         {yweets.map((item) => (

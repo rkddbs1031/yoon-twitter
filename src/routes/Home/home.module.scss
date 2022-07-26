@@ -87,3 +87,12 @@
   height: 450px;
   overflow: scroll;
 }
+
+.irSu {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  line-height: 0;
+  text-indent: -9999px;
+}
