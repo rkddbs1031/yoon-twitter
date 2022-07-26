@@ -31,11 +31,13 @@ const Home = () => {
     <section>
       <h2 className={styles.irSu}>Home</h2>
       <YweetForm />
-      <ul className={styles.yweetList}>
-        {yweets.map((item) => (
-          <Yweet key={item.id} yweetObj={item} isOwner={item.creatorId === userObj.uid} />
-        ))}
-      </ul>
+      {yweets.length > 0 && (
+        <ul className={styles.yweetList}>
+          {yweets.map((item) => (
+            <Yweet key={item.id} yweetObj={item} isOwner={item.creatorId === userObj.uid} />
+          ))}
+        </ul>
+      )}
     </section>
   )
 }
