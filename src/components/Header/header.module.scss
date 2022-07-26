@@ -1,0 +1,34 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+
+.header {
+  margin-bottom: 50px;
+
+  ul {
+    @include flexbox.flexbox(center, center);
+
+    li {
+      +li {
+        margin-left: 14px;
+      }
+
+      a {
+        @include flexbox.flexbox(center, center);
+        flex-direction: column;
+
+        svg {
+          transform: scale(0.7);
+        }
+
+        span {
+          font-size: 14px;
+          color: colors.$GRAYA;
+        }
+
+        &.isActive span {
+          color: colors.$GRAY2;
+        }
+      }
+    }
+  }
+}
