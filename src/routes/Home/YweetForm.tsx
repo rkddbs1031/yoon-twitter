@@ -10,12 +10,14 @@ import { addDoc, collection } from 'firebase/firestore'
 
 import { SubmitIcon } from 'assets/svgs'
 import styles from './home.module.scss'
+import Loading from 'components/Loading'
 
 const YweetForm = () => {
   const [yweet, setYweet] = useState<string>('')
   const [imageurl, setImageURL] = useState<string>('')
   const fileRef = useRef<HTMLInputElement>(null)
   const userObj = useRecoilValue(userObjstate)
+  const [isLoading, setLoading] = useState(false)
 
   const handleCancleUpload = () => {
     setImageURL('')
@@ -25,6 +27,7 @@ const YweetForm = () => {
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true)
     e.preventDefault()
     let getFileURL = ''
     const storageRef = ref(storageService, `${userObj.uid}/${uuidv4()}`)
@@ -39,6 +42,7 @@ const YweetForm = () => {
       imageurl: getFileURL,
       userId: userObj.displayName,
     }).then(() => {
+      setLoading(false)
       setYweet('')
       handleCancleUpload()
     })
@@ -59,31 +63,34 @@ const YweetForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <div className={styles.inputBox}>
-        <input type='text' value={yweet} placeholder="what's on your mind?" maxLength={120} onChange={handleChange} />
-        <button type='submit' className={styles.submitBtn}>
-          <SubmitIcon />
-        </button>
-      </div>
-      <div className={styles.addImage}>
-        <label htmlFor='attachFile'>
-          <span>Add photos</span>
-          <span>+</span>
-        </label>
-        <input id='attachFile' type='file' accept='image/*' onChange={onFileChange} ref={fileRef} />
-        {imageurl && (
-          <div className={styles.photo}>
-            <div className={styles.imgWrap}>
-              <img src={imageurl} alt='test' />
+    <>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputBox}>
+          <input type='text' value={yweet} placeholder="what's on your mind?" maxLength={120} onChange={handleChange} />
+          <button type='submit' className={styles.submitBtn}>
+            <SubmitIcon />
+          </button>
+        </div>
+        <div className={styles.addImage}>
+          <label htmlFor='attachFile'>
+            <span>Add photos</span>
+            <span>+</span>
+          </label>
+          <input id='attachFile' type='file' accept='image/*' onChange={onFileChange} ref={fileRef} />
+          {imageurl && (
+            <div className={styles.photo}>
+              <div className={styles.imgWrap}>
+                <img src={imageurl} alt='test' />
+              </div>
+              <button type='button' onClick={handleCancleUpload}>
+                삭제
+              </button>
             </div>
-            <button type='button' onClick={handleCancleUpload}>
-              삭제
-            </button>
-          </div>
-        )}
-      </div>
-    </form>
+          )}
+        </div>
+      </form>
+      {isLoading && <Loading />}
+    </>
   )
 }
 export default YweetForm

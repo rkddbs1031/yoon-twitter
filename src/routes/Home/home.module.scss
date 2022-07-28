@@ -2,7 +2,7 @@
 @use '/src/styles/mixins/flexbox';
 
 .form {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   .inputBox {
     position: relative;
@@ -83,7 +83,7 @@
 }
 
 .yweetList {
-  height: 400px;
+  height: 340px;
   overflow: scroll;
 }
 
