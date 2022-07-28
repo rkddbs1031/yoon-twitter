@@ -2,10 +2,8 @@ import { ChangeEvent, FormEvent } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { userObjstate } from 'states'
-import { IYweetsData } from 'types/yweets'
-import { useEffect, useState, useCallback } from 'hooks'
-import { dbService, authService } from 'utils/firebase'
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import { useEffect, useState } from 'hooks'
+import { authService } from 'utils/firebase'
 import { updateProfile } from 'firebase/auth'
 
 import styles from './profile.module.scss'
@@ -13,8 +11,7 @@ import styles from './profile.module.scss'
 const Profile = () => {
   const user = authService.currentUser
   const userObj = useRecoilValue(userObjstate)
-  const [myYweets, setMyYweets] = useState<IYweetsData[]>([])
-  const [newDisplayName, setNewDisplayName] = useState(String(userObj.displayName))
+  const [newDisplayName, setNewDisplayName] = useState<string>('')
   const setUserObj = useSetRecoilState(userObjstate)
 
   const handleRefreshUser = () => user && setUserObj({ uid: user.uid, displayName: user.displayName })
@@ -33,32 +30,25 @@ const Profile = () => {
 
   const handleChangeDisplayName = (e: ChangeEvent<HTMLInputElement>) => setNewDisplayName(e.currentTarget.value)
 
-  const getMyYweets = useCallback(async () => {
-    const yweets = await getDocs(
-      query(collection(dbService, 'yweets'), where('creatorId', '==', userObj.uid), orderBy('createdAt', 'desc'))
-    )
-    yweets.forEach((doc) => {
-      const yweetObj = {
-        id: doc.id,
-        ...doc.data(),
-      }
-      myYweets !== null && setMyYweets((prev) => [yweetObj, ...prev])
-    })
-  }, [myYweets, userObj.uid])
-
   useEffect(() => {
-    getMyYweets()
-  }, [getMyYweets])
+    userObj && setNewDisplayName(String(userObj.displayName))
+  }, [userObj])
 
   return (
     <section className={styles.profileContainer}>
       <h2>
-        <span>{userObj.displayName}</span>님의 프로필
+        {userObj.displayName ? (
+          <>
+            <span>{userObj.displayName}</span>님의 프로필
+          </>
+        ) : (
+          <span>아이디를 설정해주세요!</span>
+        )}
       </h2>
       <form onSubmit={handleUpdateProfile} className={styles.profileForm}>
         <input
           type='text'
-          placeholder='수정할 아이디를 작성해주세요.'
+          placeholder='설정할 아이디를 작성해주세요.'
           onChange={handleChangeDisplayName}
           value={newDisplayName}
         />
