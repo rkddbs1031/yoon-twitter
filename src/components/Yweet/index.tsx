@@ -1,13 +1,14 @@
 import { ChangeEvent, FormEvent } from 'react'
 
-import { deleteDoc, updateDoc, doc } from 'firebase/firestore'
+import { useState } from 'hooks'
 import { IYweetsData } from 'types/yweets'
 import { dbService, storageService } from 'utils/firebase'
-import { useState } from 'hooks'
-
-import { EditIcon, DeleteIcon, ModifyIcon, CancleIcon } from 'assets/svgs'
-import styles from './yweet.module.scss'
+import { deleteDoc, updateDoc, doc } from 'firebase/firestore'
 import { ref, deleteObject } from 'firebase/storage'
+
+import YweetInfo from './YweetInfo'
+import styles from './yweet.module.scss'
+import { EditIcon, DeleteIcon, ModifyIcon, CancleIcon } from 'assets/svgs'
 
 interface IProps {
   yweetObj: IYweetsData
@@ -65,24 +66,7 @@ const Yweet = ({ yweetObj, isOwner }: IProps) => {
         </form>
       ) : (
         <>
-          <dl>
-            {yweetObj.imageurl && (
-              <div className={styles.userImg}>
-                <dt>이미지</dt>
-                <dd>
-                  <div className={styles.imgContainer}>
-                    <img src={yweetObj.imageurl} alt={yweetObj.yweet} />
-                  </div>
-                </dd>
-              </div>
-            )}
-            <div>
-              <dt>yweet</dt>
-              <dd className={styles.yweetDesc}>{yweetObj.yweet}</dd>
-              <dt>아이디</dt>
-              <dd className={styles.userId}>{yweetObj.userId}</dd>
-            </div>
-          </dl>
+          <YweetInfo yweetObj={yweetObj} />
           {isOwner && (
             <div className={styles.btnWrap}>
               <button type='button' onClick={handleEdit}>
