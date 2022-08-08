@@ -17,11 +17,12 @@
     }
 
     .yweetDesc {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     dd {
       font-size: 14px;
+      line-height: 20px;
       color: colors.$GRAY6;
 
       &.userId {
@@ -64,8 +65,10 @@
 
       .inputBox {
         position: relative;
+        width: 80%;
 
         input {
+          width: 100%;
           font-size: 14px;
 
           &::placeholder {
