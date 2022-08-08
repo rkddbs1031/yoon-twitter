@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/yoon-twitter/static/css/main.cc235461.css",
+    "main.js": "/yoon-twitter/static/js/main.53b7101e.js",
+    "static/media/github.svg": "/yoon-twitter/static/media/github.b2294bccaa20da50b7d58419f07c0892.svg",
+    "static/media/twitter.svg": "/yoon-twitter/static/media/twitter.fe06d572bd13680e66f4d31fc7cf1832.svg",
+    "static/media/google.svg": "/yoon-twitter/static/media/google.8b0812c49fddfd3673c011acbd655aab.svg",
+    "index.html": "/yoon-twitter/index.html",
+    "static/media/edit.svg": "/yoon-twitter/static/media/edit.3f535aec93fc9e8cf681e0bc7b0aa767.svg",
+    "static/media/user.svg": "/yoon-twitter/static/media/user.a50591984749bc9d3b7505014a8f07ee.svg",
+    "static/media/delete.svg": "/yoon-twitter/static/media/delete.d9b9ddc8a637b815b3a2f03f001996b4.svg",
+    "static/media/modify.svg": "/yoon-twitter/static/media/modify.2d89689952be5b4829a80e44d3d25453.svg",
+    "static/media/cancle.svg": "/yoon-twitter/static/media/cancle.3eca467887b37e580878e46b60bf3794.svg",
+    "static/media/submit.svg": "/yoon-twitter/static/media/submit.b5e175229f0470f622a3b81bc29ee576.svg",
+    "main.cc235461.css.map": "/yoon-twitter/static/css/main.cc235461.css.map",
+    "main.53b7101e.js.map": "/yoon-twitter/static/js/main.53b7101e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cc235461.css",
+    "static/js/main.53b7101e.js"
+  ]
+}
