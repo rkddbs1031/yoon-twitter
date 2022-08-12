@@ -24,8 +24,8 @@ const Home = () => {
   }
 
   useEffect(() => {
-    getYweets()
-  }, [])
+    userObj.uid !== null && getYweets()
+  }, [userObj])
 
   return (
     <section>
