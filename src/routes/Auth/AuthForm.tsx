@@ -64,10 +64,10 @@ const AuthForm = () => {
       <input name='password' type='password' placeholder='Password' required onChange={onChange} />
       {authError && <p className={styles.authError}>{authError}</p>}
       <button type='submit' className={styles.submitBtn}>
-        {newAccount ? 'Create Account' : 'Sign In'}
+        {newAccount ? '회원가입' : '로그인'}
       </button>
       <button type='button' onClick={toggleAccount} className={styles.btn}>
-        {newAccount ? 'Sign In' : 'Create Account'}
+        {newAccount ? '로그인' : '회원가입'}
       </button>
     </form>
   )
