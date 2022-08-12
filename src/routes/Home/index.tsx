@@ -24,7 +24,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    userObj.uid !== null && getYweets()
+    userObj.uid && getYweets()
   }, [userObj])
 
   return (
