@@ -35,9 +35,10 @@ const YweetForm = () => {
       const res = await uploadString(storageRef, imageurl, 'data_url')
       getFileURL = await getDownloadURL(res.ref)
     }
+    const date = new Date()
     await addDoc(collection(dbService, 'yweets'), {
       yweet,
-      createdAt: Date.now(),
+      createdAt: date.toLocaleString('ko-kr'),
       creatorId: userObj.uid,
       imageurl: getFileURL,
       userId: userObj.displayName,
