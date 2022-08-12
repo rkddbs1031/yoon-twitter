@@ -10,23 +10,38 @@
 
   dl {
     @include flexbox.flexbox(start, start);
+    flex-direction: column;
     width: 80%;
+
+    .yweetTop {
+      @include flexbox.flexbox(start, center);
+    }
 
     .userImg {
       margin-right: 10px;
+      margin-bottom: 7px;
     }
 
     .yweetDesc {
       margin-bottom: 5px;
+      line-height: 20px;
     }
 
     dd {
       font-size: 14px;
-      line-height: 20px;
       color: colors.$GRAY6;
 
       &.userId {
+        display: inline-block;
         font-size: 12px;
+        font-weight: 500;
+        color: colors.$MAIN_COLOR;
+      }
+
+      &.userDate {
+        margin: 7px 0;
+        font-size: 12px;
+        color: rgba(colors.$GRAYA, 0.7);
       }
     }
   }
@@ -46,8 +61,8 @@
   }
 
   .imgContainer {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
     border: 2px solid colors.$MAIN_COLOR;
     border-radius: 50%;
